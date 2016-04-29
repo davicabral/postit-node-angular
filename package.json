@@ -1,0 +1,28 @@
+{
+  "name": "postit-herakles",
+  "version": "1.0.0",
+  "description": "Atividade de processo seletivo",
+  "main": "www.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davicabral/postit-node-angular.git"
+  },
+  "keywords": [
+    "node",
+    "angular",
+    "bootstrap"
+  ],
+  "author": "Davi Cabral de Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davicabral/postit-node-angular/issues"
+  },
+  "homepage": "https://github.com/davicabral/postit-node-angular#readme",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "bootstrap": "^3.3.6"
+  }
+}
