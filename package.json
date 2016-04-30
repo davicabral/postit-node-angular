@@ -24,6 +24,7 @@
   "dependencies": {
     "angular": "^1.5.5",
     "angular-ladda": "^0.3.3",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "ngstorage": "^0.3.10"
   }
 }
