@@ -4,9 +4,9 @@
 var express = require('express');
 var app = express();
 
-var index = require('/routes/index');
-var user = require('/routes/user');
-var postit = require('/routes/postit');
+var index = require('./routes/index');
+var user = require('./routes/user');
+var postit = require('./routes/postit');
 
 
 app.set('port', (process.env.PORT || 3000));
