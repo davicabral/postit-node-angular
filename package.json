@@ -25,6 +25,7 @@
     "angular": "^1.5.5",
     "angular-ladda": "^0.3.3",
     "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
     "ngstorage": "^0.3.10"
   }
 }
