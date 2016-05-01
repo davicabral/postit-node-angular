@@ -1,0 +1,17 @@
+<form></form>
+<article class="col-md-10 col-md-offset-1" ng-controller="postitController">
+<div class="postit col-md-3" ng-repeat="p in postits">
+    <div>
+        <button class="btn btn-danger" type="button" ng-click="deletePostit($index)">
+            <i class="glyphicon glyphicon-trash"></i>
+        </button>
+        <button class="btn btn-primary" type="button">
+            <i class="glyphicon glyphicon-pencil"></i>
+        </button>
+    </div>
+    <div class="row">
+        <textarea class="center-block" resize-textarea>{{p.texto}}</textarea>
+    </div>
+</div>
+</article>
+

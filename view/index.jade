@@ -1,0 +1,21 @@
+doctype html
+html(lang="en", ng-app="postit-login")
+    head
+        title= 'Herakles - Postit'
+        link(href="stylesheets/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet")
+        link(href="stylesheets/bootstrap/dist/css/bootstrap-theme.min.css" , rel="stylesheet")
+        link(href="stylesheets/ladda/dist/ladda-themeless.min.css" , rel="stylesheet")
+        link(href="stylesheets/style.css" , rel="stylesheet")
+    body
+        session.contaner.main-content(ng-controller="applicationController")
+            ng-include(ng-if="!isLoggedIn", src="'html/login.html'")
+            ng-include(ng-if="isLoggedIn", src="'html/postit.html'")
+
+        script(src="javascripts/angular/angular.min.js")
+        script(src="javascripts/ladda/js/spin.js")
+        script(src="javascripts/ladda/js/ladda.js")
+        script(src="javascripts/ngstorage/ngStorage.min.js")
+        script(src="javascripts/angular-ladda/dist/angular-ladda.min.js")
+        script(src="javascripts/angular-controllers/angular-controllers.js")
+
+
