@@ -127,7 +127,7 @@ app.controller('postitController' , function ($scope, $http, $localStorage, Appl
 
     $scope.postits = [
         {
-            texto: "texto 1 do postit"
+            texto: "Mussum Ipsum, cacilds vidis litro abertis. Leite de capivaris, leite de mula manquis. Mé faiz elementum girarzis, nisi eros vermeio. Per aumento de cachacis, eu reclamis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!"
         },
         {
             texto: "texto 5 do postit"
@@ -149,4 +149,17 @@ app.controller('postitController' , function ($scope, $http, $localStorage, Appl
     $scope.deletePostit = function (index) {
         this.postits.splice(index, 1)
     }
+});
+
+app.directive('resizeTextarea', function ($compile) {
+    return function (scope, element, attrs) {
+
+        scope.$watch(function () {
+                return element[0].value;
+            },
+            function () {
+                console.log(element[0].scrollHeight);
+                element[0].style.height = element[0].scrollHeight + "px";
+            });
+    };
 });

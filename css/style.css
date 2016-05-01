@@ -26,3 +26,14 @@
     margin: 20px 75px;
 
 }
+
+textarea {
+    background-color: transparent;
+    border: 0 transparent;
+    max-width: 200px;
+    width: 250px;
+    resize: none;
+    text-align: center;
+    -moz-text-align-last: center; /* Firefox 12+ */
+    text-align-last: center;
+}
