@@ -6,3 +6,23 @@
     min-height: 50%;
     background-color: blue;
 }
+
+.postit {
+    background: #64AB71;
+    min-height: 200px;
+    max-width: 300px;
+    min-width: 250px;
+    padding: 30px;
+    margin: 20px 20px 20px 0;
+}
+
+.postit p {
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
+}
+
+.postit div:first-of-type {
+    margin: 20px 75px;
+
+}

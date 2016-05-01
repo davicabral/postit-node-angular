@@ -122,3 +122,31 @@ app.controller( "loginController" , function ($scope, $http, $localStorage, Appl
         }
     };
 });
+
+app.controller('postitController' , function ($scope, $http, $localStorage, Application) {
+
+    $scope.postits = [
+        {
+            texto: "texto 1 do postit"
+        },
+        {
+            texto: "texto 5 do postit"
+        },
+        {
+            texto: "texto 2 do postit"
+        },
+        {
+            texto: "texto 3 do postit"
+        },
+        {
+            texto: "texto 4 do postit"
+        },
+        {
+            texto: "texto 7 do postit"
+        }
+    ];
+
+    $scope.deletePostit = function (index) {
+        this.postits.splice(index, 1)
+    }
+});
