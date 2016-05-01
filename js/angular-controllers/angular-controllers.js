@@ -7,6 +7,27 @@ var app = angular.module("postit-login", [
     'ngStorage'
 ]);
 
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push(function($q, $location, $localStorage) {
+        return {
+            'request': function (config) {
+                config.headers = config.headers || {};
+                if ($localStorage.token) {
+                    config.headers.Authorization = $localStorage.token;
+                }
+                return config;
+            },
+            'responseError': function(response) {
+                if(response.status === 401 || response.status === 403) {
+                    $location.path('/view/login.html');
+                }
+                return $q.reject(response);
+            }
+        };
+    });
+});
+
+
 app.factory('Application', function ($http, $localStorage) {
 
     var baseUrl = "http://localhost:3000";
@@ -50,36 +71,35 @@ app.factory('Application', function ($http, $localStorage) {
         },
         getPostit: function(success, error) {
             $http.get(baseUrl + '/postit').then(success,error);
+        },
+        editPostit: function(data, success, error) {
+            $http.put(baseUrl + '/postit', data).then(success, error);
+        },
+        createPostit: function(data, success, error) {
+            $http.post(baseUrl + '/postit', data).then(success, error);
+        },
+        deletePostit: function(data, success, error) {
+            $http.delete(baseUrl + '/postit', data).then(success, error);
         }
     };
 });
 
+app.controller('applicationContoller', function ($scope ,$localStorage, Application) {
 
-app.config(function ($httpProvider) {
-    $httpProvider.interceptors.push(function($q, $location, $localStorage) {
-        return {
-            'request': function (config) {
-                config.headers = config.headers || {};
-                if ($localStorage.token) {
-                    config.headers.Authorization = $localStorage.token;
-                }
-                return config;
-            },
-            'responseError': function(response) {
-                if(response.status === 401 || response.status === 403) {
-                    $location.path('/view/login.html');
-                }
-                return $q.reject(response);
-            }
-        };
-    });
+    $scope.$storage = $localStorage;
+
+    if(Application.currentUser.id) {
+        $scope.isLoggedIn = true;       //verifica se há a existência de um usuario autenticado
+    } else {
+        $scope.isLoggedIn = false;      //verifica se há a existência de um usuario autenticado
+    }
 });
 
-app.controller( "loginController" , function ($scope, $http, $localStorage, Application) {
+app.controller( "loginController" , function ($scope, $http, Application, $window) {
 
     $scope.loginErro = false;           //Variável responsável para dar feedback sobre problemas no processo de login
     $scope.loginLoading = false;        //Variável responsável para dar feedback enquanto a requisição de login está sendo processada
-    $scope.$storage = $localStorage;
+
 
 
     $scope.onSubmit = function () {
@@ -97,7 +117,7 @@ app.controller( "loginController" , function ($scope, $http, $localStorage, Appl
             $scope.loginErro = !response.data.hasUser;
             if(response.data.hasUser) {
                 $scope.$storage.token = response.data.user.token;
-                //Passar para a tela dos PostIts
+                $window.location.reload();
             }
 
         }
@@ -123,7 +143,7 @@ app.controller( "loginController" , function ($scope, $http, $localStorage, Appl
     };
 });
 
-app.controller('postitController' , function ($scope, $http, $localStorage, Application) {
+app.controller('postitController' , function ($scope, $http, Application) {
 
     $scope.postits = [
         {
@@ -158,7 +178,6 @@ app.directive('resizeTextarea', function ($compile) {
                 return element[0].value;
             },
             function () {
-                console.log(element[0].scrollHeight);
                 element[0].style.height = element[0].scrollHeight + "px";
             });
     };
