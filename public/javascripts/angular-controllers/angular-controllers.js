@@ -76,8 +76,8 @@ app.factory('Application', function ($http, $localStorage) {
         createPostit: function(data, success, error) {
             $http.post(baseUrl + '/postit', data).then(success, error);
         },
-        deletePostit: function(id_postit, success, error) {
-            $http.delete(baseUrl + '/postit/' + id_postit).then(success, error);
+        deletePostit: function(ids, success, error) {
+            $http.delete(baseUrl + '/postit/' + ids.id_usuario + '/' + ids.id_postit).then(success, error);
         }
     };
 });
@@ -147,7 +147,6 @@ app.controller('postitController' , function ($scope, $http, Application) {
 
         function onCreateSuccess (newPostit) {
             $scope.creatingPostit = false;
-            newPostit.isEditting = false;
             $scope.postit_text = "";
             $scope.postits.push(newPostit.data);
         }
@@ -177,7 +176,13 @@ app.controller('postitController' , function ($scope, $http, Application) {
     };
 
     $scope.deletePostit = function (index, id) {
-        Application.deletePostit(id,onDeleteSuccess,onDeleteFail);
+
+        var ids = {
+            id_usuario: Application.currentUser.id,
+            id_postit: id
+        };
+
+        Application.deletePostit(ids,onDeleteSuccess,onDeleteFail);
 
 
         function onDeleteSuccess(response) {
@@ -190,6 +195,32 @@ app.controller('postitController' , function ($scope, $http, Application) {
 
         }
     };
+
+    $scope.editPostit = function (postit) {
+
+        postit.textoEditado = postit.texto;
+        if(postit.isEditing == undefined) {
+            postit.isEditing = true;
+        } else {
+            postit.isEditing = !postit.isEditing
+        }
+    };
+
+    $scope.saveEdition = function (postit) {
+        Application.editPostit(postit, onEditingSuccess, onEditingFail);
+
+
+        function onEditingSuccess (response) {
+            console.log(response.data);
+            postit.texto = response.data.texto;
+            postit.isEditing = false;
+        }
+
+        function onEditingFail (err) {
+            console.log(err);
+            postit.isEditing = false;
+        }
+    }
 });
 
 app.directive('resizeTextarea', function ($compile) {
