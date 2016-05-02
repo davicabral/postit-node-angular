@@ -23,6 +23,12 @@
   "homepage": "https://github.com/davicabral/postit-node-angular#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "pg": "^4.5.5",
+    "sequelize": "^3.22.0",
+    "body-parser": "^1.15.0",
+    "crypto": "0.0.3",
+    "jsonwebtoken": "^6.2.0",
+    "pg-hstore": "^2.3.2"
   }
 }

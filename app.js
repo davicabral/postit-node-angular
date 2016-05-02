@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var path = require('path');
+var db = require('./models/models');
 
 var app = express();
 
@@ -22,9 +23,11 @@ app.use('/', index);
 //app.use('/user', user);
 //app.use('/postit', postit);
 
+db.sequelize.sync().then(function () {
+    app.listen(app.get('port'), function() {
+        console.log('Node app is running on port', app.get('port'));
+    });
 
-app.listen(app.get('port'), function() {
-    console.log('Node app is running on port', app.get('port'));
 });
 
 
