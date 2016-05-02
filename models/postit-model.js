@@ -3,10 +3,16 @@
  */
 
 
-module.exports = function (sequelize, Sequelize) {
+module.exports = function (sequelize, Sequelize, User) {
     return sequelize.define('Postit', {
         id_usuario: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull : false,
+            references: {
+                model: User,
+                key: 'id',
+                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+            }
         },
         texto : {
             type: Sequelize.TEXT,

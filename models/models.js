@@ -14,19 +14,13 @@ if (!database) {
     } else {
         sequelize = new Sequelize("postgres://postgres:123456@localhost:5432/postgres")
     }
-
+    var UserModel = Usuario(sequelize, Sequelize)
     database = {
         Sequelize: Sequelize,
         sequelize: sequelize,
-        User:      Usuario(sequelize, Sequelize),
-        Postit:    Postit(sequelize, Sequelize)
-        // add your other models here
+        User:      UserModel,
+        Postit:    Postit(sequelize, Sequelize, UserModel)
     };
-
-    /*
-     Associations can be defined here. E.g. like this:
-     global.db.User.hasMany(global.db.SomethingElse)
-     */
 }
 
 module.exports = database;

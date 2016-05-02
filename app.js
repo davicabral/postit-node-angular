@@ -26,14 +26,14 @@ app.use('/', index);
 app.use('/user', user);
 //app.use('/postit', postit);
 
-db.sequelize.sync().then(function () {
+db.sequelize.sync({force: true}).then(function () {
 
-    //db.User.create({
-    //    login: 'carlos',
-    //    password: '7c4a8d09ca3762af61e59520943dc26494f8941b'
-    //}).then(function () {
-    //    console.log('Usuario criado');
-    //});
+    db.User.create({
+        login: 'carlos',
+        password: '7c4a8d09ca3762af61e59520943dc26494f8941b'
+    }).then(function () {
+        console.log('Usuario criado');
+    });
 
     app.listen(app.get('port'), function() {
         console.log('Node app is running on port', app.get('port'));

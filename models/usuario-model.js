@@ -5,15 +5,19 @@
 module.exports = function(sequelize, Sequelize) {
     return sequelize.define('Usuario', {
         login: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false,
+            unique: true
+
         },
         password: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         token : {
             type: Sequelize.TEXT
         }
     }, {
-        freezeTableName: true // Model tableName will be the same as the model name
+        freezeTableName: true
     });
 };
