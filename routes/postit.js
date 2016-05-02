@@ -6,7 +6,7 @@ var crypto = require('crypto');
 var db = require('../models/models');
 var router = express.Router();
 
-router.get('/', tokenValidator, function (req, res) {
+router.get('/:id', tokenValidator, function (req, res) {
 
    db.User.find({
         where: {

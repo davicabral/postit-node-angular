@@ -69,8 +69,8 @@ app.factory('Application', function ($http, $localStorage) {
         signup: function(data, success, error) {
             $http.post(baseUrl + '/authenticate', data).success(success).error(error)
         },
-        getPostit: function(success, error) {
-            $http.get(baseUrl + '/postit').then(success,error);
+        getPostit: function(id_usuario,success, error) {
+            $http.get(baseUrl + '/postit/' + id_usuario).then(success,error);
         },
         editPostit: function(data, success, error) {
             $http.put(baseUrl + '/postit', data).then(success, error);
@@ -131,7 +131,7 @@ app.controller( "loginController" , function ($scope, $http, Application, $windo
     };
 
     $scope.click = function () {
-        Application.getPostit(onPostitSuccess, onPostitFail);
+        Application.getPostit(Application.currentUser.id , onPostitSuccess, onPostitFail);
 
         function onPostitSuccess(response) {
             console.log(response);
