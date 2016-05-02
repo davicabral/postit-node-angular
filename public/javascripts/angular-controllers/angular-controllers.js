@@ -64,22 +64,22 @@ app.factory('Application', function ($http, $localStorage) {
     return {
         currentUser : currentUser,
         login: function(data, success, error) {
-            $http.post(baseUrl + '/user', data).then(success,error);
+            $http.post(baseUrl + 'user', data).then(success,error);
         },
         signup: function(data, success, error) {
-            $http.post(baseUrl + '/authenticate', data).success(success).error(error)
+            $http.post(baseUrl + 'authenticate', data).success(success).error(error)
         },
         getPostit: function(success, error) {
-            $http.get(baseUrl + '/postit').then(success,error);
+            $http.get(baseUrl + 'postit').then(success,error);
         },
         editPostit: function(data, success, error) {
-            $http.put(baseUrl + '/postit', data).then(success, error);
+            $http.put(baseUrl + 'postit', data).then(success, error);
         },
         createPostit: function(data, success, error) {
-            $http.post(baseUrl + '/postit', data).then(success, error);
+            $http.post(baseUrl + 'postit', data).then(success, error);
         },
         deletePostit: function(data, success, error) {
-            $http.delete(baseUrl + '/postit', data).then(success, error);
+            $http.delete(baseUrl + 'postit', data).then(success, error);
         }
     };
 });
