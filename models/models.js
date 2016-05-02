@@ -18,8 +18,8 @@ if (!database) {
     database = {
         Sequelize: Sequelize,
         sequelize: sequelize,
-        User:      Usuario,
-        Postit:    Postit
+        User:      Usuario(sequelize, Sequelize),
+        Postit:    Postit(sequelize, Sequelize)
         // add your other models here
     };
 

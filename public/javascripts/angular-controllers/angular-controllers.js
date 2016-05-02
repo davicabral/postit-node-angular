@@ -30,7 +30,7 @@ app.config(function ($httpProvider) {
 
 app.factory('Application', function ($http, $localStorage) {
 
-    var baseUrl = "http://localhost:3000";
+    var baseUrl = "https://postit-herakles.herokuapp.com/";
 
     function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
@@ -64,7 +64,7 @@ app.factory('Application', function ($http, $localStorage) {
     return {
         currentUser : currentUser,
         login: function(data, success, error) {
-            $http.post(baseUrl + '/user/login', data).then(success,error);
+            $http.post(baseUrl + '/user', data).then(success,error);
         },
         signup: function(data, success, error) {
             $http.post(baseUrl + '/authenticate', data).success(success).error(error)

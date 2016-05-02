@@ -3,7 +3,7 @@
  */
 
 
-module.exports = function (sequelize) {
+module.exports = function (sequelize, Sequelize) {
     return sequelize.define('Postit', {
         id_usuario: {
             type: Sequelize.INTEGER
