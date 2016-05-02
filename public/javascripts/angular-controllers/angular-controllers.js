@@ -30,8 +30,8 @@ app.config(function ($httpProvider) {
 
 app.factory('Application', function ($http, $localStorage) {
 
-    var baseUrl = "https://postit-herakles.herokuapp.com/";
-
+    var baseUrl = "https://postit-herakles.herokuapp.com";
+    //var baseUrl = "http://localhost:5500";
     function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
         switch (output.length % 4) {
@@ -64,22 +64,22 @@ app.factory('Application', function ($http, $localStorage) {
     return {
         currentUser : currentUser,
         login: function(data, success, error) {
-            $http.post(baseUrl + 'user', data).then(success,error);
+            $http.post(baseUrl + '/user', data).then(success,error);
         },
         signup: function(data, success, error) {
-            $http.post(baseUrl + 'authenticate', data).success(success).error(error)
+            $http.post(baseUrl + '/authenticate', data).success(success).error(error)
         },
         getPostit: function(success, error) {
-            $http.get(baseUrl + 'postit').then(success,error);
+            $http.get(baseUrl + '/postit').then(success,error);
         },
         editPostit: function(data, success, error) {
-            $http.put(baseUrl + 'postit', data).then(success, error);
+            $http.put(baseUrl + '/postit', data).then(success, error);
         },
         createPostit: function(data, success, error) {
-            $http.post(baseUrl + 'postit', data).then(success, error);
+            $http.post(baseUrl + '/postit', data).then(success, error);
         },
         deletePostit: function(data, success, error) {
-            $http.delete(baseUrl + 'postit', data).then(success, error);
+            $http.delete(baseUrl + '/postit', data).then(success, error);
         }
     };
 });
@@ -145,30 +145,54 @@ app.controller( "loginController" , function ($scope, $http, Application, $windo
 
 app.controller('postitController' , function ($scope, $http, Application) {
 
-    $scope.postits = [
-        {
-            texto: "Mussum Ipsum, cacilds vidis litro abertis. Leite de capivaris, leite de mula manquis. Mé faiz elementum girarzis, nisi eros vermeio. Per aumento de cachacis, eu reclamis. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!"
-        },
-        {
-            texto: "texto 5 do postit"
-        },
-        {
-            texto: "texto 2 do postit"
-        },
-        {
-            texto: "texto 3 do postit"
-        },
-        {
-            texto: "texto 4 do postit"
-        },
-        {
-            texto: "texto 7 do postit"
+    $scope.postits = [];
+
+    $scope.creatingPostit = false;
+
+    $scope.createNewPostit = function () {
+
+        $scope.creatingPostit = true;
+        var data = {
+            id_usuario : Application.currentUser.id,
+            texto: $scope.postit_text
+        };
+
+        Application.createPostit(data, onCreateSuccess, onCreateFail)
+
+        function onCreateSuccess (newPostit) {
+            $scope.creatingPostit = false;
+            newPostit.isEditting = false;
+            $scope.postits.push(newPostit);
         }
-    ];
+
+        function onCreateFail (err) {
+            $scope.creatingPostit = false;
+            console.log(err);
+        }
+    };
+
+    $scope.getAllPostits = function () {
+
+        Application.getPostit(onGetSuccess,onGetFail);
+
+        function onGetSuccess (postits) {
+
+            if(Array.isArray(postits)) {
+                $scope.postits = postits;
+            } else {
+                $scope.postits.push(postits);
+            }
+        }
+
+        function onGetFail (err) {
+
+            console.log(err);
+        }
+    };
 
     $scope.deletePostit = function (index) {
         this.postits.splice(index, 1)
-    }
+    };
 });
 
 app.directive('resizeTextarea', function ($compile) {

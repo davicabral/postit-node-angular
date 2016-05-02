@@ -1,17 +1,28 @@
-<form></form>
-<article class="col-md-10 col-md-offset-1" ng-controller="postitController">
-<div class="postit col-md-3" ng-repeat="p in postits">
-    <div>
-        <button class="btn btn-danger" type="button" ng-click="deletePostit($index)">
-            <i class="glyphicon glyphicon-trash"></i>
-        </button>
-        <button class="btn btn-primary" type="button">
-            <i class="glyphicon glyphicon-pencil"></i>
-        </button>
+<article class="col-md-10 col-md-offset-1" ng-controller="postitController" ng-init="getAllPostits()">
+    <div class="postit col-md-3" ng-repeat="p in postits">
+        <div>
+            <button class="btn btn-danger" type="button" ng-click="deletePostit($index)">
+                <i class="glyphicon glyphicon-trash"></i>
+            </button>
+            <button class="btn btn-primary" type="button">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </button>
+        </div>
+        <div class="row">
+            <p>{{p.texto}}</p>
+        </div>
     </div>
-    <div class="row">
-        <textarea class="center-block" resize-textarea>{{p.texto}}</textarea>
+    <div class="postit col-md-3">
+        <div>
+
+        </div>
+        <div class="row">
+            <form method="post" ng-submit="createNewPostit()">
+                <textarea id="novoPostit" class="center-block editavel" resize-textarea placeholder="Digite sua anotação" ng-model="postit_text"></textarea>
+                <button class="btn btn-success center-block" type="submit" ladda="creatingPostit" data-style="expand-right">Salvar</button>
+            </form>
+        </div>
     </div>
-</div>
+
 </article>
 

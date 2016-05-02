@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', index);
 app.use('/user', user);
-//app.use('/postit', postit);
+app.use('/postit', postit);
 
 db.sequelize.sync({force: true}).then(function () {
 
