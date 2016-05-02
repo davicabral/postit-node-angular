@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var path = require('path');
+var cors = require('cors');
 var bodyParser = require('body-parser');
 var db = require('./models/models');
 
@@ -21,6 +22,7 @@ app.set('port', (process.env.PORT || 5500));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use('/', index);
 app.use('/user', user);

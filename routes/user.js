@@ -25,16 +25,20 @@ router.post('/', function(req, res, next) {
         var response = {
             hasUser: false
         };
+
         if(user) {
             response.hasUser = true;
-            user.token = "";
-            user.token = jwt.sign(JSON.stringify(user), 'dGVzdGUtc2VsZWNhby1oZXJha2xlcy1tZS1kYS1lbXByZWdv');
-            user.updateAttributes({
-                token: user.token
-            }).then(function() {
-                response.user = user;
+            if(!user.token) {
+                user.token = jwt.sign(JSON.stringify(user), 'dGVzdGUtc2VsZWNhby1oZXJha2xlcy1tZS1kYS1lbXByZWdv');
+                user.updateAttributes({
+                    token: user.token
+                }).then(function() {
+                    response.user = user;
+                    res.json(response);
+                });
+            } else {
                 res.json(response);
-            });
+            }
         } else {
             console.log(JSON.stringify(response));
             res.json(response)

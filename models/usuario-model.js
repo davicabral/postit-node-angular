@@ -15,7 +15,8 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
         token : {
-            type: Sequelize.TEXT
+            type: Sequelize.TEXT,
+            defaultValue: null
         }
     }, {
         freezeTableName: true

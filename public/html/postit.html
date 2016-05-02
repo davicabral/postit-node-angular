@@ -1,7 +1,7 @@
 <article class="col-md-10 col-md-offset-1" ng-controller="postitController" ng-init="getAllPostits()">
     <div class="postit col-md-3" ng-repeat="p in postits">
         <div>
-            <button class="btn btn-danger" type="button" ng-click="deletePostit($index)">
+            <button class="btn btn-danger" type="button" ng-click="deletePostit($index, p.id)">
                 <i class="glyphicon glyphicon-trash"></i>
             </button>
             <button class="btn btn-primary" type="button">

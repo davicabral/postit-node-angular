@@ -14,21 +14,23 @@ router.get('/:id', tokenValidator, function (req, res) {
         }, attributes: ['id', 'token']
     }).then(function (user) {
         if(user && user.token === req.token) {
-            Postit.findAll({
+            db.Postit.findAll({
                 where : {
-                    id_usuario: req.params.id
+                    id_usuario: req.params.id,
+                    ativo: true
                 }
             }).then( function (postits) {
                 res.json(postits);
             })
         } else {
-            res.end(403);
+            res.sendStatus(403);
         }
     });
 });
 
 router.post('/', tokenValidator , function (req, res) {
 
+    console.log(req.body);
     db.User.find({
         where: {
             id: req.body.id_usuario
@@ -38,19 +40,37 @@ router.post('/', tokenValidator , function (req, res) {
 
             db.Postit.create({
                 id_usuario: req.body.id_usuario,
-                texto: req.body.texto
+                texto: req.body.texto,
+                ativo: true
             }).then(function (postit) {
                 console.log(JSON.stringify(postit));
                 if(postit) {
                     res.json(postit)
+                } else {
+                    res.sendStatus(403);
                 }
-                res.send(403);
             });
         } else {
-            res.send(403);
+
+            res.sendStatus(403);
         }
     });
 });
+
+router.delete('/:id', function (req, res) {
+
+    db.Postit.findOne({
+        where : {id: req.params.id}
+    }).then(function (user) {
+            if(user) {
+                user.updateAttributes({
+                    ativo: false
+                }).then(function (data) {
+                    res.json(data);
+                })
+            }
+        }) 
+    });
 
 function tokenValidator(req,res,next) {
     var bearerHeader = req.headers["authorization"];
@@ -58,7 +78,7 @@ function tokenValidator(req,res,next) {
         req.token = bearerHeader;
         next();
     } else {
-        res.send(403);
+        res.sendStatus(403);
     }
 }
 module.exports = router;

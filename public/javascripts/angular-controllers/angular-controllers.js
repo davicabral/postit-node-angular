@@ -30,8 +30,8 @@ app.config(function ($httpProvider) {
 
 app.factory('Application', function ($http, $localStorage) {
 
-    var baseUrl = "https://postit-herakles.herokuapp.com";
-    //var baseUrl = "http://localhost:5500";
+    //var baseUrl = "https://postit-herakles.herokuapp.com";
+    var baseUrl = "http://localhost:5500";
     function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
         switch (output.length % 4) {
@@ -55,6 +55,7 @@ app.factory('Application', function ($http, $localStorage) {
         if (typeof token !== 'undefined') {
             var encoded = token.split('.')[1];
             user = JSON.parse(urlBase64Decode(encoded));
+            user.token = token;
         }
         return user;
     }
@@ -66,10 +67,7 @@ app.factory('Application', function ($http, $localStorage) {
         login: function(data, success, error) {
             $http.post(baseUrl + '/user', data).then(success,error);
         },
-        signup: function(data, success, error) {
-            $http.post(baseUrl + '/authenticate', data).success(success).error(error)
-        },
-        getPostit: function(id_usuario,success, error) {
+        getPostit: function(id_usuario ,success, error) {
             $http.get(baseUrl + '/postit/' + id_usuario).then(success,error);
         },
         editPostit: function(data, success, error) {
@@ -78,8 +76,8 @@ app.factory('Application', function ($http, $localStorage) {
         createPostit: function(data, success, error) {
             $http.post(baseUrl + '/postit', data).then(success, error);
         },
-        deletePostit: function(data, success, error) {
-            $http.delete(baseUrl + '/postit', data).then(success, error);
+        deletePostit: function(id_postit, success, error) {
+            $http.delete(baseUrl + '/postit/' + id_postit).then(success, error);
         }
     };
 });
@@ -129,18 +127,6 @@ app.controller( "loginController" , function ($scope, $http, Application, $windo
             console.log(err);
         }
     };
-
-    $scope.click = function () {
-        Application.getPostit(Application.currentUser.id , onPostitSuccess, onPostitFail);
-
-        function onPostitSuccess(response) {
-            console.log(response);
-        }
-
-        function onPostitFail() {
-            console.log('deu errado');
-        }
-    };
 });
 
 app.controller('postitController' , function ($scope, $http, Application) {
@@ -157,12 +143,13 @@ app.controller('postitController' , function ($scope, $http, Application) {
             texto: $scope.postit_text
         };
 
-        Application.createPostit(data, onCreateSuccess, onCreateFail)
+        Application.createPostit(data, onCreateSuccess, onCreateFail);
 
         function onCreateSuccess (newPostit) {
             $scope.creatingPostit = false;
             newPostit.isEditting = false;
-            $scope.postits.push(newPostit);
+            $scope.postit_text = "";
+            $scope.postits.push(newPostit.data);
         }
 
         function onCreateFail (err) {
@@ -173,25 +160,35 @@ app.controller('postitController' , function ($scope, $http, Application) {
 
     $scope.getAllPostits = function () {
 
-        Application.getPostit(onGetSuccess,onGetFail);
+        Application.getPostit(Application.currentUser.id ,onGetSuccess,onGetFail);
 
         function onGetSuccess (postits) {
-
-            if(Array.isArray(postits)) {
-                $scope.postits = postits;
+            if(Array.isArray(postits.data)) {
+                $scope.postits = postits.data;
             } else {
-                $scope.postits.push(postits);
+                $scope.postits.push(postits.data);
             }
         }
 
         function onGetFail (err) {
 
-            console.log(err);
+            //console.log(err);
         }
     };
 
-    $scope.deletePostit = function (index) {
-        this.postits.splice(index, 1)
+    $scope.deletePostit = function (index, id) {
+        Application.deletePostit(id,onDeleteSuccess,onDeleteFail);
+
+
+        function onDeleteSuccess(response) {
+            if (!response.data.ativo) {
+                $scope.postits.splice(index, 1);
+            }
+        }
+
+        function onDeleteFail(data) {
+
+        }
     };
 });
 

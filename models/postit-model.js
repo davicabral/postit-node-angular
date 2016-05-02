@@ -17,6 +17,10 @@ module.exports = function (sequelize, Sequelize, User) {
         texto : {
             type: Sequelize.TEXT,
             defaultValue: ""
+        },
+        ativo : {
+            type: Sequelize.BOOLEAN,
+            defaultValue: true
         }
     }, {
         freezeTableName: true
