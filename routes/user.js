@@ -37,6 +37,7 @@ router.post('/', function(req, res, next) {
                     res.json(response);
                 });
             } else {
+                response.user = user;
                 res.json(response);
             }
         } else {

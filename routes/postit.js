@@ -81,31 +81,35 @@ router.delete('/:id/:id_postit', tokenValidator, function (req, res) {
 });
 
 router.put('/', tokenValidator , function (req, res) {
-
-    console.log(req.body);
+    
     db.User.find({
         where: {
             id: req.body.id_usuario
         }, attributes: ['id', 'token']
-    }).then(function (user) {
+    }).then(onUserFindSuccess);
+
+    function onUserFindSuccess( user ) {
         if(user && user.token === req.token) {
 
             db.Postit.findOne({
                 where : {id: req.body.id}
-            }).then(function (postit) {
-                if(postit) {
-                    postit.updateAttributes({
-                        texto: req.body.textoEditado
-                    }).then(function (data) {
-                        res.json(data);
-                    })
-                }
-            });
+            }).then(onPostitFindSuccess);
         } else {
-
             res.sendStatus(403);
         }
-    });
+
+        function onPostitFindSuccess(postit) {
+            if(postit) {
+                postit.updateAttributes({
+                    texto: req.body.textoEditado
+                }).then(function (data) {
+                    res.json(data);
+                })
+            }
+        }
+    }
+
+
 });
 
 function tokenValidator(req,res,next) {

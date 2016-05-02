@@ -1,11 +1,12 @@
 <article class="col-md-10 col-md-offset-1" ng-controller="postitController" ng-init="getAllPostits()">
+    <h1>Suas anotações</h1>
     <div class="postit col-md-3" ng-repeat="p in postits">
         <div>
             <button class="btn btn-danger" type="button" ng-click="deletePostit($index, p.id)">
                 <i class="glyphicon glyphicon-trash"></i>
             </button>
             <button class="btn btn-primary" type="button" ng-click="editPostit(p)">
-                <i class="glyphicon" ng-class="{'glyphicon-remove' : p.isEditing, 'glyphicon-pencil' : !p.isEditing}"></i>
+                <i class="glyphicon" ng-class="{'glyphicon-remove' : p.isEdting, 'glyphicon-pencil' : !p.isEditing}"></i>
             </button>
         </div>
         <div class="row">
@@ -23,7 +24,9 @@
         <div class="row">
             <form method="post" ng-submit="createNewPostit()">
                 <textarea id="novoPostit" class="center-block editavel" resize-textarea placeholder="Digite sua anotação" ng-model="postit_text"></textarea>
-                <button class="btn btn-success center-block" type="submit" ladda="creatingPostit" data-style="expand-right">Salvar</button>
+                <button class="btn btn-success center-block" type="submit" ladda="creatingPostit" data-style="expand-right">
+                    <i class="glyphicon glyphicon-ok"></i>
+                </button>
             </form>
         </div>
     </div>
