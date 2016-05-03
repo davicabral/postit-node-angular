@@ -13,7 +13,7 @@
             </button>
         </div>
         <div class="row">
-            <p ng-if="!p.isEditing">{{p.texto}}</p>
+            <p class="textoPostit" ng-if="!p.isEditing">{{p.texto}}</p>
             <form method="post" ng-submit="saveEdition(p)" ng-if="p.isEditing">
                 <textarea id="" class="center-block editavel" resize-textarea placeholder="Digite sua anotação" ng-model="p.textoEditado">{{p.texto}}</textarea>
                 <button class="btn btn-success center-block" type="submit" ladda="creatingPostit" data-style="expand-right">Salvar</button>

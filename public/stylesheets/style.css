@@ -24,23 +24,27 @@ article > div:last-of-type {
 
 .postit div:first-of-type {
     margin: 20px 0 20px 30%;
+}
 
+.textoPostit {
+    max-width: 250px;
+    word-break: break-all;
 }
 
 .btn-center {
     margin-top: 25px;
 }
 
-textarea.estatico {
-    background-color: transparent;
-    border: 0 transparent;
-    max-width: 200px;
-    width: 250px;
-    resize: none;
-    text-align: center;
-    -moz-text-align-last: center; /* Firefox 12+ */
-    text-align-last: center;
-}
+/*textarea.estatico {*/
+    /*background-color: transparent;*/
+    /*border: 0 transparent;*/
+    /*max-width: 200px;*/
+    /*width: 250px;*/
+    /*resize: none;*/
+    /*text-align: center;*/
+    /*-moz-text-align-last: center; /!* Firefox 12+ *!/*/
+    /*text-align-last: center;*/
+/*}*/
 
 textarea.editavel {
     border-radius: 5%;

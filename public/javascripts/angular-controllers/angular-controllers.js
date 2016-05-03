@@ -31,8 +31,8 @@ app.config(function ($httpProvider) {
 
 app.factory('Application', function ($http, $localStorage) {
 
-    var baseUrl = "https://postit-herakles.herokuapp.com";
-    //var baseUrl = "http://localhost:5500";    //URL do banco local
+    //var baseUrl = "https://postit-herakles.herokuapp.com";
+    var baseUrl = "http://localhost:5500";    //URL do banco local
     function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
         switch (output.length % 4) {
