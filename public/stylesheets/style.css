@@ -23,7 +23,7 @@ article > div:last-of-type {
 }
 
 .postit div:first-of-type {
-    margin: 20px 75px;
+    margin: 20px 0 20px 30%;
 
 }
 
