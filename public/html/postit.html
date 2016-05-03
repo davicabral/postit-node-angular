@@ -1,5 +1,8 @@
 <article class="col-md-10 col-md-offset-1" ng-controller="postitController" ng-init="getAllPostits()">
-    <h1>Suas anotações</h1>
+    <div class="row">
+        <h1 class="col-md-10">Suas anotações</h1>
+        <button class="col-md-1 btn btn-danger btn-center" ng-click="logout()">Logout</button>
+    </div>
     <div class="postit col-md-3" ng-repeat="p in postits">
         <div>
             <button class="btn btn-danger" type="button" ng-click="deletePostit($index, p.id)">

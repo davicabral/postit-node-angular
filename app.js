@@ -33,8 +33,6 @@ db.sequelize.sync({force: true}).then(function () {
     db.User.create({
         login: 'carlos',
         password: '7c4a8d09ca3762af61e59520943dc26494f8941b'
-    }).then(function () {
-        console.log('Usuario criado');
     });
 
     app.listen(app.get('port'), function() {

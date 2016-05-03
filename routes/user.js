@@ -11,6 +11,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.post('/', function(req, res, next) {
+
     var hash = crypto
         .createHash("sha1")
         .update(req.body.password)
@@ -41,7 +42,6 @@ router.post('/', function(req, res, next) {
                 res.json(response);
             }
         } else {
-            console.log(JSON.stringify(response));
             res.json(response)
         }
     });

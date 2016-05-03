@@ -8,7 +8,7 @@ var app = angular.module("postit-login", [
 ]);
 
 app.config(function ($httpProvider) {
-    $httpProvider.interceptors.push(function($q, $location, $localStorage) {
+    $httpProvider.interceptors.push(function($q, $localStorage, $window) {
         return {
             'request': function (config) {
                 config.headers = config.headers || {};
@@ -19,7 +19,8 @@ app.config(function ($httpProvider) {
             },
             'responseError': function(response) {
                 if(response.status === 401 || response.status === 403) {
-                    $location.path('/view/login.html');
+                    $localStorage.$reset();
+                    $window.location.reload();
                 }
                 return $q.reject(response);
             }
@@ -31,7 +32,7 @@ app.config(function ($httpProvider) {
 app.factory('Application', function ($http, $localStorage) {
 
     var baseUrl = "https://postit-herakles.herokuapp.com";
-    //var baseUrl = "http://localhost:5500";
+    //var baseUrl = "http://localhost:5500";    //URL do banco local
     function urlBase64Decode(str) {
         var output = str.replace('-', '+').replace('_', '/');
         switch (output.length % 4) {
@@ -98,8 +99,6 @@ app.controller( "loginController" , function ($scope, $http, Application, $windo
     $scope.loginErro = false;           //Variável responsável para dar feedback sobre problemas no processo de login
     $scope.loginLoading = false;        //Variável responsável para dar feedback enquanto a requisição de login está sendo processada
 
-
-
     $scope.onSubmit = function () {
         $scope.loginLoading = true;
         var params = {
@@ -123,16 +122,14 @@ app.controller( "loginController" , function ($scope, $http, Application, $windo
         //Função chamada quando há algum erro no processamento da função. Ex: Timeout ou servidor não acessível.
         function onLoginFail(err) {
             $scope.loginLoading = false;
-            console.log("Erro na requisição");
-            console.log(err);
+            alert("Problema de conexão verifique sua internet e tente mais tarde");
         }
     };
 });
 
-app.controller('postitController' , function ($scope, $http, Application) {
+app.controller('postitController' , function ($scope, $http, Application, $window) {
 
     $scope.postits = [];
-
     $scope.creatingPostit = false;
 
     $scope.createNewPostit = function () {
@@ -170,8 +167,7 @@ app.controller('postitController' , function ($scope, $http, Application) {
         }
 
         function onGetFail (err) {
-
-            //console.log(err);
+            alert("Problema de conexão verifique sua internet e tente mais tarde");
         }
     };
 
@@ -192,12 +188,11 @@ app.controller('postitController' , function ($scope, $http, Application) {
         }
 
         function onDeleteFail(data) {
-
+            alert("Problema de conexão verifique sua internet e tente mais tarde");
         }
     };
 
     $scope.editPostit = function (postit) {
-
         postit.textoEditado = postit.texto;
         if(postit.isEditing == undefined) {
             postit.isEditing = true;
@@ -211,7 +206,6 @@ app.controller('postitController' , function ($scope, $http, Application) {
 
 
         function onEditingSuccess (response) {
-            console.log(response.data);
             postit.texto = response.data.texto;
             postit.isEditing = false;
         }
@@ -220,6 +214,11 @@ app.controller('postitController' , function ($scope, $http, Application) {
             console.log(err);
             postit.isEditing = false;
         }
+    };
+
+    $scope.logout = function () {
+        $scope.$storage.$reset();
+        $window.location.reload();
     }
 });
 

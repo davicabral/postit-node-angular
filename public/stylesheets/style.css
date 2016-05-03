@@ -2,17 +2,12 @@
     margin-top: 15%;
 }
 
-.login-row {
-    min-height: 50%;
-    background-color: blue;
-}
-
 article > div:last-of-type {
-    background: #f2e917;
+    background: #fff68f;
 }
 
 .postit {
-    background: #64AB71;
+    background: #b4eeb4;
     min-height: 200px;
     max-width: 300px;
     min-width: 250px;
@@ -30,6 +25,10 @@ article > div:last-of-type {
 .postit div:first-of-type {
     margin: 20px 75px;
 
+}
+
+.btn-center {
+    margin-top: 25px;
 }
 
 textarea.estatico {
